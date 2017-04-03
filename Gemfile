@@ -55,3 +55,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 group :producton do
   gem 'rails_12factor'
 end
+
+ruby '2.3.3'
