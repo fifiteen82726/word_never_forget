@@ -4,7 +4,7 @@ require 'open-uri'
 class Word < ApplicationRecord
   BASE_URL = 'http://www.iciba.com/'
 
-  def check(word)
+  def self.check(word, save = false)
     word_url = BASE_URL + word.to_s
     page = Nokogiri::HTML(open(word_url))
     word = page.css('h1').first.children.text.delete(" \t\r\n")
@@ -14,11 +14,20 @@ class Word < ApplicationRecord
       attributr = list.css('.prop')[0].children.text
       description.concat(attributr + ' ')
       description.concat(list.css('p')[0].children.text.delete(" \t\r\n"))
-      description.concat('\n ')
+      description.concat('<br/> ')
+    end
+
+    word_attribute = {
+      :name => word,
+      :description => description
+    }
+
+    if save == true
+      Word.create!(word_attribute) if Word.find_by(name: word).nil?
     end
 
     return {
-      :word => word,
+      :name => word,
       :description => description
     }
   end

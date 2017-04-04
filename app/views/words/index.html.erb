@@ -18,7 +18,7 @@
     <% @words.each do |word| %>
       <tr>
         <td><%= word.name %></td>
-        <td><%= word.description %></td>
+        <td><%= word.description.html_safe %></td>
         <td><%= word.audio %></td>
         <td><%= word.example %></td>
         <td><%= word.review_time %></td>
